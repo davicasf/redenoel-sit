@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rede Noel - Loja Premium</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#111;color:#fff}
+header{background:linear-gradient(90deg,#8B0000,#ff1a1a);padding:32px;text-align:center;border-bottom:3px solid #fff}
+header h1{font-size:42px}
+header p{margin-top:10px;font-size:18px}
+.container{max-width:1200px;margin:auto;padding:30px}
+.title{text-align:center;margin-bottom:30px;font-size:30px;color:#ff4d4d}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.card,.cart,.checkout,.info-box{background:#1b1b1b;border:2px solid #ff1a1a;border-radius:16px;padding:24px}
+.card h2,.cart h2,.checkout h2,.info-box h2{color:#ff4d4d;margin-bottom:14px}
+select,input{width:100%;padding:12px;margin:10px 0;border:none;border-radius:8px;font-size:15px}
+.price{font-size:22px;font-weight:bold;color:#00ff99;margin:14px 0}
+button{width:100%;padding:14px;background:#ff1a1a;color:#fff;border:none;border-radius:8px;font-size:16px;cursor:pointer;transition:.3s}
+button:hover{background:#cc0000}
+.small-btn{margin-top:12px}
+.cart-item{background:#2a2a2a;padding:10px;border-radius:8px;margin:8px 0}
+.total{font-size:22px;font-weight:bold;margin-top:16px}
+.checkout{margin-top:30px;display:none}
+.pix{font-size:24px;color:#00ff99;font-weight:bold;margin:16px 0}
+.qr-placeholder{margin-top:18px;padding:30px;border:2px dashed #fff;border-radius:12px;text-align:center}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.badge{background:#2a2a2a;padding:10px 14px;border-radius:999px;font-size:14px}
+footer{margin-top:50px;padding:20px;text-align:center;background:#0d0d0d;border-top:2px solid red}
+</style>
+</head>
+<body>
+<header>
+<h1>REDE NOEL</h1>
+<p>Loja Oficial • VIPs • Armaduras • Itens Místicos</p>
+</header>
+
+<div class="container">
+<h2 class="title">Loja Premium</h2>
+
+<div class="info-box">
+<h2>Dados do Jogador</h2>
+<input type="text" id="nick" placeholder="Digite seu nick do Minecraft">
+<input type="text" id="discord" placeholder="Seu Discord ou WhatsApp para contato">
+<div class="badges">
+<div class="badge">Pagamento via PIX</div>
+<div class="badge">Entrega rápida</div>
+<div class="badge">Suporte no WhatsApp</div>
+</div>
+</div>
+
+<br>
+
+<div class="grid">
+<div class="card">
+<h2>Armadura Mística</h2>
+<select id="mistica"><option>Capacete</option><option>Peitoral</option><option>Calça</option><option>Bota</option></select>
+<div class="price">R$ 8,00</div>
+<button onclick="adicionarCarrinho('Armadura Mística','mistica',8)">Adicionar ao Carrinho</button>
+</div>
+
+<div class="card">
+<h2>Armadura Natal</h2>
+<select id="natal"><option>Capacete</option><option>Peitoral</option><option>Calça</option><option>Bota</option></select>
+<div class="price">R$ 8,00</div>
+<button onclick="adicionarCarrinho('Armadura Natal','natal',8)">Adicionar ao Carrinho</button>
+</div>
+
+<div class="card">
+<h2>Armadura ADM</h2>
+<select id="adm"><option>Capacete</option><option>Peitoral</option><option>Calça</option><option>Bota</option></select>
+<div class="price">R$ 4,00</div>
+<button onclick="adicionarCarrinho('Armadura ADM','adm',4)">Adicionar ao Carrinho</button>
+</div>
+
+<div class="card">
+<h2>Armadura Copa</h2>
+<select id="copa"><option>Capacete</option><option>Peitoral</option><option>Calça</option><option>Bota</option></select>
+<div class="price">R$ 12,00</div>
+<button onclick="adicionarCarrinho('Armadura Copa','copa',12)">Adicionar ao Carrinho</button>
+</div>
+
+<div class="card">
+<h2>Itens Místicos</h2>
+<select id="itens"><option>Espada</option><option>Picareta</option><option>Machado</option><option>Pá</option><option>Enxada</option></select>
+<div class="price">R$ 7,00</div>
+<button onclick="adicionarCarrinho('Item Místico','itens',7)">Adicionar ao Carrinho</button>
+</div>
+
+<div class="card">
+<h2>VIP Ancestral</h2>
+<div class="price">R$ 10,00</div>
+<button onclick="adicionarVIP('VIP Ancestral',10)">Adicionar ao Carrinho</button>
+</div>
+
+<div class="card">
+<h2>VIP Celestial</h2>
+<div class="price">R$ 16,00</div>
+<button onclick="adicionarVIP('VIP Celestial',16)">Adicionar ao Carrinho</button>
+</div>
+</div>
+
+<div class="cart">
+<h2>Carrinho</h2>
+<div id="listaCarrinho"></div>
+<div class="total">Total: R$ <span id="total">0</span></div>
+<button class="small-btn" onclick="finalizarCompra()">Finalizar Compra</button>
+</div>
+
+<div class="checkout" id="checkout">
+<h2>Finalizar Pedido</h2>
+<p><strong>Nick:</strong> <span id="nickFinal"></span></p>
+<p><strong>Contato:</strong> <span id="contatoFinal"></span></p>
+<p><strong>Total:</strong> R$ <span id="totalFinal"></span></p>
+
+<p style="margin-top:18px;">Pagamento via PIX:</p>
+<div class="pix">11 97754-5010</div>
+
+<div class="qr-placeholder">
+<h3>QR Code PIX</h3>
+<p>Adicione aqui a imagem do seu QR Code PIX</p>
+</div>
+
+<button class="small-btn" onclick="abrirWhatsApp()">Enviar Pedido no WhatsApp</button>
+<p style="margin-top:15px;">Após o pagamento, envie o comprovante para liberação do item ou VIP.</p>
+</div>
+</div>
+
+<footer>
+© 2026 Rede Noel - Loja Profissional Oficial
+</footer>
+
+<script>
+let total = 0;
+let resumoPedido = [];
+
+function adicionarCarrinho(nome, selectId, preco){
+ let nick=document.getElementById('nick').value;
+ if(nick===''){alert('Digite seu nick primeiro!');return;}
+ let item=document.getElementById(selectId).value;
+ let texto = nome + ' - ' + item + ' - R$ ' + preco;
+ resumoPedido.push(texto);
+ let div=document.createElement('div');
+ div.className='cart-item';
+ div.innerText=texto;
+ document.getElementById('listaCarrinho').appendChild(div);
+ total += preco;
+ document.getElementById('total').innerText=total;
+}
+
+function adicionarVIP(nome, preco){
+ let nick=document.getElementById('nick').value;
+ if(nick===''){alert('Digite seu nick primeiro!');return;}
+ let texto = nome + ' - R$ ' + preco;
+ resumoPedido.push(texto);
+ let div=document.createElement('div');
+ div.className='cart-item';
+ div.innerText=texto;
+ document.getElementById('listaCarrinho').appendChild(div);
+ total += preco;
+ document.getElementById('total').innerText=total;
+}
+
+function finalizarCompra(){
+ let nick=document.getElementById('nick').value;
+ let contato=document.getElementById('discord').value;
+ if(nick===''){alert('Digite seu nick!');return;}
+ if(total<=0){alert('Adicione itens ao carrinho!');return;}
+ document.getElementById('nickFinal').innerText=nick;
+ document.getElementById('contatoFinal').innerText=contato || 'Não informado';
+ document.getElementById('totalFinal').innerText=total;
+ document.getElementById('checkout').style.display='block';
+ window.scrollTo({top:document.getElementById('checkout').offsetTop,behavior:'smooth'});
+}
+
+function abrirWhatsApp(){
+ let nick=document.getElementById('nick').value;
+ let msg='Olá, comprei na loja Rede Noel.%0A';
+ msg += 'Nick: ' + nick + '%0A';
+ msg += 'Itens: ' + resumoPedido.join(', ') + '%0A';
+ msg += 'Total: R$ ' + total + '%0A';
+ msg += 'Vou enviar o comprovante do PIX.';
+ window.open('https://wa.me/5511977545010?text=' + msg,'_blank');
+}
+</script>
+</body>
+</html>
